@@ -30,13 +30,13 @@ export default class Repository extends Component {
     loading: true,
     estado: 'closed',
     page: 1,
-    per_page: 3,
+    perPage: 4,
   };
 
   // Executado assim que o componente aparece em tela
   async componentDidMount() {
     const { match } = this.props;
-    const { estado, page, per_page } = this.state;
+    const { estado, page, perPage } = this.state;
 
     const repoName = decodeURIComponent(match.params.repository);
 
@@ -45,7 +45,7 @@ export default class Repository extends Component {
       api.get(`/repos/${repoName}/issues?page={page}`, {
         params: {
           state: estado,
-          per_page,
+          per_page: perPage,
           page,
         },
       }),
@@ -55,6 +55,9 @@ export default class Repository extends Component {
       repository: repository.data,
       issues: issues.data,
       loading: false,
+      estado,
+      page,
+      perPage,
     });
   }
 
@@ -71,22 +74,28 @@ export default class Repository extends Component {
 
   nextPage = () => {
     const { page } = this.state;
-    this.setState({ page: +1 });
+    this.setState({ page: page + 1 });
     console.log(page);
+    // this.componentDidMount();
   };
 
   // /// set state (open/closed/all) /////
   setOpen = () => {
+    const { estado } = this.state;
     this.setState({ estado: 'open' });
-    console.log('oi');
+    console.log(estado);
   };
 
   setClosed = () => {
+    const { estado } = this.state;
     this.setState({ estado: 'closed' });
+    console.log(estado);
   };
 
   setAll = () => {
+    const { estado } = this.state;
     this.setState({ estado: 'all' });
+    console.log(estado);
   };
 
   render() {
@@ -105,7 +114,7 @@ export default class Repository extends Component {
           <p>{repository.description}</p>
         </Owner>
 
-        <OpenButton onClick={() => this.setOpen} type="button">
+        <OpenButton onClick={this.setOpen} type="button">
           Open
         </OpenButton>
         <ClosedButton onClick={this.setClosed}>Closed</ClosedButton>
