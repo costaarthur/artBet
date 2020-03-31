@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { FaDice } from 'react-icons/fa';
+import { FaDice, FaSpinner } from 'react-icons/fa';
 
 import Container from '../../components/Container';
 // import { Form, SubmitButton, List, ShowError, Pages } from './styles';
@@ -9,9 +9,15 @@ export default function Cassino() {
   const [artCoins, setArtCoins] = useState(1000);
   const [betValue, setBetValue] = useState(0);
   const [dice, setDice] = useState(0);
+  const [loading, setLoading] = useState(false);
 
   function addCoin() {
+    setLoading(true);
     setArtCoins(artCoins + 1000);
+    // setLoading(false);
+    setTimeout(() => {
+      setLoading(false);
+    }, 2000);
   }
 
   function rollDice() {
@@ -53,6 +59,7 @@ export default function Cassino() {
         <button type="button" onClick={addCoin}>
           Adicionar ArtCoins
         </button>
+        {loading ? <FaSpinner /> : ''}
       </Topo>
       <Container>
         <h1>
@@ -65,7 +72,11 @@ export default function Cassino() {
       <Container>
         <div>
           <h1>High or Low</h1>
-          <h3>Valor girado: {dice}</h3>
+          <h3>
+            Valor girado:
+            <FaSpinner />
+            {dice}
+          </h3>
           <br />
           <h4>Valor da aposta</h4>
           <input value={betValue} onChange={e => setBetValue(e.target.value)} />
@@ -83,7 +94,10 @@ export default function Cassino() {
       <Container>
         <div>
           <h1>Guess a number</h1>
-          <h3>Valor girado: {dice}</h3>
+          <h3>
+            Valor girado: {loading ? <FaSpinner /> : <FaSpinner />}
+            {dice}
+          </h3>
           <br />
           <h4>Valor da aposta</h4>
           <input value={betValue} onChange={e => setBetValue(e.target.value)} />
