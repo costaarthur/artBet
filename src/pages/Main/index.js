@@ -1,123 +1,115 @@
-import React, { Component } from 'react';
-import { FaGithubAlt, FaPlus, FaSpinner } from 'react-icons/fa';
-import { Link } from 'react-router-dom';
-
-import api from '../../services/api';
+import React, { useState } from 'react';
+import { FaDice } from 'react-icons/fa';
 
 import Container from '../../components/Container';
-import { Form, SubmitButton, List, ShowError, Pages } from './styles';
+// import { Form, SubmitButton, List, ShowError, Pages } from './styles';
+import { Contagem, Topo } from './styles';
 
-export default class Main extends Component {
-  state = {
-    newRepo: '',
-    repositories: [],
-    loading: false,
-    error: null,
-    errorName: '',
-  };
+export default function Cassino() {
+  const [artCoins, setArtCoins] = useState(1000);
+  const [betValue, setBetValue] = useState(0);
+  const [dice, setDice] = useState(0);
 
-  // Carregar os dados do localStorage
-  componentDidMount() {
-    const repositories = localStorage.getItem('repositories');
+  function addCoin() {
+    setArtCoins(artCoins + 1000);
+  }
 
-    if (repositories) {
-      this.setState({ repositories: JSON.parse(repositories) });
+  function rollDice() {
+    setDice(1 + Math.floor(Math.random() * 6));
+  }
+
+  function highOrLow(hl) {
+    rollDice();
+
+    switch (hl) {
+      case 'high':
+        if (dice > 3) return console.log('high high');
+
+      case 'high':
+        if (dice <= 3) return console.log('high low');
+
+      case 'low':
+        if (dice > 3) return console.log('low high');
+
+      case 'low':
+        if (dice <= 3) return console.log('low low');
+
+      default:
+        return console.log('default');
     }
   }
 
-  // Salvar os dados do localStorage
-  componentDidUpdate(_, prevState) {
-    const { repositories } = this.state;
+  //   if (hl === 'high') {
+  //     console.log(dice);
+  //   } else {
+  //     console.log(dice);
+  //   }
+  // }
 
-    if (prevState.repositories !== repositories) {
-      localStorage.setItem('repositories', JSON.stringify(repositories));
-    }
-  }
-
-  handleInputChange = e => {
-    this.setState({ newRepo: e.target.value, error: null });
-  };
-
-  handleSubmit = async e => {
-    e.preventDefault();
-
-    this.setState({ loading: true, error: false });
-
-    try {
-      const { newRepo, repositories } = this.state;
-
-      if (newRepo === '') throw 'Você precisa indicar um repositório';
-
-      const repoExists = repositories.find(r => r.name === newRepo);
-
-      if (repoExists) throw 'Repositório já existe';
-
-      const response = await api.get(`/repos/${newRepo}`);
-
-      const data = {
-        name: response.data.full_name,
-      };
-
-      this.setState({
-        repositories: [...repositories, data],
-        newRepo: '',
-      });
-    } catch (error) {
-      this.setState({ error: true, errorName: error });
-      console.log(this.state.errorName);
-      // console.log(error.response.status);
-      if (error.response.status === 404) {
-        alert('Repositório inexistente.');
-        this.setState({ errorName: 'Repositório inexistente.' });
-      } else {
-        // alert(`errou: ${error}`);
-        this.setState({ errorName: 'Teste' });
-      }
-    } finally {
-      this.setState({ loading: false });
-    }
-  };
-
-  render() {
-    const { newRepo, repositories, loading, error } = this.state;
-
-    return (
+  return (
+    <>
+      <Topo>
+        <Contagem>No momento você possui: {artCoins} ArtCoins</Contagem>
+        <button type="button" onClick={addCoin}>
+          Adicionar ArtCoins
+        </button>
+      </Topo>
       <Container>
         <h1>
-          <FaGithubAlt />
-          Repositórios
+          <FaDice />
+          Jogos
+          <FaDice />
         </h1>
-        <Form onSubmit={this.handleSubmit} error={error}>
-          <input
-            type="text"
-            placeholder="Adicionar repositório"
-            value={newRepo}
-            onChange={this.handleInputChange}
-          />
-
-          <SubmitButton loading={loading}>
-            {loading ? (
-              <FaSpinner color="#FFF" size={14} />
-            ) : (
-                <FaPlus color="#FFF" size={14} />
-              )}
-          </SubmitButton>
-        </Form>
-        <ShowError Error={error}>
-          {error === null ? 'Errorzão:' : console.log(this.state.errorName)}
-          {/* {this.state.errorName} */}
-        </ShowError>
-        <List>
-          {repositories.map(repository => (
-            <li key={repository.name}>
-              <span>{repository.name}</span>
-              <Link to={`/repository/${encodeURIComponent(repository.name)}`}>
-                Detalhes
-              </Link>
-            </li>
-          ))}
-        </List>
       </Container>
-    );
-  }
+      {/* HIGH OR LOW */}
+      <Container>
+        <div>
+          <h1>High or Low</h1>
+          <h3>Valor girado: {dice}</h3>
+          <br />
+          <h4>Valor da aposta</h4>
+          <input value={betValue} onChange={e => setBetValue(e.target.value)} />
+          <br />
+          <button type="button" onClick={() => highOrLow('high')}>
+            HIGH
+          </button>
+          <button type="button" onClick={() => highOrLow('low')}>
+            LOW
+          </button>
+          {dice ? <h1>Voce Ganhou!</h1> : <h1>Voce Perdeu!</h1>}
+        </div>
+      </Container>
+      {/* GUESS A NUMBER */}
+      <Container>
+        <div>
+          <h1>Guess a number</h1>
+          <h3>Valor girado: {dice}</h3>
+          <br />
+          <h4>Valor da aposta</h4>
+          <input value={betValue} onChange={e => setBetValue(e.target.value)} />
+          <br />
+          <button type="button" onClick={() => rollDice('high')}>
+            1
+          </button>
+          <button type="button" onClick={() => rollDice('high')}>
+            2
+          </button>
+          <button type="button" onClick={() => rollDice('high')}>
+            3
+          </button>
+          <button type="button" onClick={() => rollDice('high')}>
+            4
+          </button>
+          <button type="button" onClick={() => rollDice('high')}>
+            5
+          </button>
+          <button type="button" onClick={() => rollDice('high')}>
+            6
+          </button>
+
+          {dice ? <h1>Voce Ganhou!</h1> : <h1>Voce Perdeu!</h1>}
+        </div>
+      </Container>
+    </>
+  );
 }
