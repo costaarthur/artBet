@@ -45,6 +45,10 @@ export const Contagem = styled.h1`
   /* margin-left: 40px; */
 `;
 
+export const Divinputs = styled.div`
+  display: inline-block;
+`;
+
 // export const Form = styled.form`
 //   margin-top: 30px;
 //   display: flex;

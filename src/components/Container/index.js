@@ -11,10 +11,10 @@ const Container = styled.div`
 
   h1 {
     text-align: center;
-    font-size: 30px;
-    display: flex;
-    flex-direction: row;
     align-items: center;
+    font-size: 30px;
+    display: row;
+    flex-direction: row;
 
     svg {
       height: 40px;

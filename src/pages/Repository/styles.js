@@ -111,7 +111,6 @@ export const OpenButton = styled.button.attrs({
   border: 0;
   padding: 0 15px;
   margin-left: 10px;
-  margin-bottom: 5px;
   margin-top: 50px;
   border-radius: 4px;
   display: flex;
@@ -133,7 +132,6 @@ export const ClosedButton = styled.button.attrs({
   border: 0;
   padding: 0 15px;
   margin-left: 10px;
-  margin-bottom: 5px;
   border-radius: 4px;
   display: flex;
   justify-content: center;
