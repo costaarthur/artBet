@@ -2,20 +2,25 @@ import styled from 'styled-components';
 
 const Container = styled.div`
   max-width: 700px;
+  color: #ff7804;
   background: #fff;
   border-radius: 4px;
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
-  padding: 30px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+  padding: 10px;
   margin: 80px auto;
 
   h1 {
-    font-size: 20px;
+    text-align: center;
+    font-size: 30px;
     display: flex;
     flex-direction: row;
     align-items: center;
 
     svg {
+      height: 40px;
+      width: 40px;
       margin-right: 10px;
+      margin-left: 10px;
     }
   }
 `;

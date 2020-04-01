@@ -2,6 +2,7 @@ import React, { useState, useMemo, useEffect } from 'react';
 import { FaDice, FaSpinner } from 'react-icons/fa';
 
 import Container from '../../components/Container';
+import GameContainer from '../../components/GameContainer';
 // import { Form, SubmitButton, List, ShowError, Pages } from './styles';
 import { Contagem, Topo } from './styles';
 
@@ -165,7 +166,7 @@ export default function Cassino() {
       <Topo>
         <Contagem>No momento você possui: {artCoins} ArtCoins</Contagem>
         <button type="button" onClick={addCoin}>
-          Adicionar ArtCoins
+          <span>Adicionar ArtCoins</span>
         </button>
         {loading ? <FaSpinner /> : ''}
       </Topo>
@@ -177,63 +178,71 @@ export default function Cassino() {
         </h1>
       </Container>
       {/* HIGH OR LOW */}
-      <Container>
+      <GameContainer>
+        <h1>High or Low</h1>
+        <h3>
+          Valor girado:
+          {/* <FaSpinner /> */}
+          {diceResult}
+        </h3>
+        <br />
+        <button type="button" onClick={() => highOrLow('high')}>
+          <span>HIGH</span>
+        </button>
+        <button type="button" onClick={() => highOrLow('low')}>
+          <span>LOW</span>
+        </button>
+        {/* adding inputs */}
         <div>
-          <h1>High or Low</h1>
-          <h3>
-            Valor girado:
-            {/* <FaSpinner /> */}
-            {diceResult}
-          </h3>
-          <br />
-          <h4>Valor da aposta</h4>
+          <h4>Bet amount</h4>
           <input value={betValue} onChange={e => setBetValue(e.target.value)} />
-          <br />
-          <button type="button" onClick={() => highOrLow('high')}>
-            HIGH
-          </button>
-          <button type="button" onClick={() => highOrLow('low')}>
-            LOW
-          </button>
-          {hasError ? <h1>{hasError}!</h1> : <h1 />}
-          {winOrLose ? <h1>Voce {winOrLose}!</h1> : <h1 />}
-        </div>
-      </Container>
-      {/* GUESS A NUMBER */}
-      <Container>
-        <div>
-          <h1>Guess a number</h1>
-          <h3>
-            Valor girado:
-            {/* {loading ? <FaSpinner /> : <FaSpinner />} */}
-            {diceGuessResult}
-          </h3>
-          <br />
-          <h4>Valor da aposta</h4>
-          <input value={betValue} onChange={e => setBetValue(e.target.value)} />
-          <br />
-          <button type="button" onClick={() => guessANumber(1)}>
-            1
-          </button>
-          <button type="button" onClick={() => guessANumber(2)}>
-            2
-          </button>
-          <button type="button" onClick={() => guessANumber(3)}>
-            3
-          </button>
-          <button type="button" onClick={() => guessANumber(4)}>
-            4
-          </button>
-          <button type="button" onClick={() => guessANumber(5)}>
-            5
-          </button>
-          <button type="button" onClick={() => guessANumber(6)}>
-            6
-          </button>
 
-          {guessWinOrLose ? <h1>Voce {guessWinOrLose}!</h1> : <h1 />}
+          <h4>Win chance</h4>
+          <input value={betValue} onChange={e => setBetValue(e.target.value)} />
+
+          <h4>Payout</h4>
+          <input value={betValue} onChange={e => setBetValue(e.target.value)} />
+
+          <h4>Profit on win</h4>
+          <input value={betValue} onChange={e => setBetValue(e.target.value)} />
+          <br />
         </div>
-      </Container>
+        {hasError ? <h6>{hasError}!</h6> : <h6 />}
+        {winOrLose ? <h6>Voce {winOrLose}!</h6> : <h6 />}
+      </GameContainer>
+      {/* GUESS A NUMBER */}
+      <GameContainer>
+        <h1>Guess a number</h1>
+        <h3>
+          Valor girado:
+          {/* {loading ? <FaSpinner /> : <FaSpinner />} */}
+          {diceGuessResult}
+        </h3>
+        <br />
+        <h4>Valor da aposta</h4>
+        <input value={betValue} onChange={e => setBetValue(e.target.value)} />
+        <br />
+        <button type="button" onClick={() => guessANumber(1)}>
+          <span>1</span>
+        </button>
+        <button type="button" onClick={() => guessANumber(2)}>
+          <span>2</span>
+        </button>
+        <button type="button" onClick={() => guessANumber(3)}>
+          <span>3</span>
+        </button>
+        <button type="button" onClick={() => guessANumber(4)}>
+          <span>4</span>
+        </button>
+        <button type="button" onClick={() => guessANumber(5)}>
+          <span>5</span>
+        </button>
+        <button type="button" onClick={() => guessANumber(6)}>
+          <span>6</span>
+        </button>
+
+        {guessWinOrLose ? <h6>Voce {guessWinOrLose}!</h6> : ''}
+      </GameContainer>
     </>
   );
 }

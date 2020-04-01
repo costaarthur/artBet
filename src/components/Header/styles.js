@@ -5,29 +5,23 @@ export const HeaderContainer = styled.header`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: #ff4500;
+  background-color: #ff7804;
+  color: #fff;
   height: 50px;
 
-  div {
-    /* text-align: right; */
-    margin-left: 10px;
-    justify-content: space-between;
-    display: flex;
-    align-items: center;
-    /* color: #fff; */
-
-    strong {
-      font-size: 20px;
+  strong {
+      margin-left: 10px;
+      font-size: 30px;
       display: flex;
       align-items: center;
       text-decoration: none;
     }
 
     h1 {
+      margin-right: 10px;
       display: flex;
       text-align: right;
       font-size: 14px;
-      justify-content: space-between;
     }
   }
 `;

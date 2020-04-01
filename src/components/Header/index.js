@@ -12,10 +12,8 @@ export default function Header() {
 
   return (
     <HeaderContainer>
-      <div>
-        <strong>ArtBet</strong>
-        <h1>Meu ArtCoin: 0</h1>
-      </div>
+      <strong>ArtBet</strong>
+      <h1>Meus ArtCoins: 0</h1>
     </HeaderContainer>
   );
 }
