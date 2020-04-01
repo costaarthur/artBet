@@ -14,7 +14,7 @@ export const HeaderContainer = styled.header`
     justify-content: space-between;
     display: flex;
     align-items: center;
-    color: #fff;
+    /* color: #fff; */
 
     strong {
       font-size: 20px;
