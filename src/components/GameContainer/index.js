@@ -4,7 +4,7 @@ import { darken } from 'polished';
 const GameContainer = styled.div`
   max-width: 700px;
   background: #fff;
-  border-radius: 4px;
+  /* border-radius: 4px; */
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
   padding: 30px;
   margin: 80px auto;
@@ -15,6 +15,7 @@ const GameContainer = styled.div`
     text-align: center;
     padding: 3vw;
     position: relative;
+    /* display: grid; */
   }
 
   h1 {
@@ -41,7 +42,7 @@ const GameContainer = styled.div`
   h6 {
     color: #555555;
     font-size: 14px;
-    margin-top: 5px;
+    /* margin-top: 5px; */
   }
 
   svg {
@@ -54,10 +55,11 @@ const GameContainer = styled.div`
     text-align: center;
     justify-content: center;
     margin-top: 5px;
+    margin-bottom: 5px;
     border: 1px solid #ddd;
-    border-radius: 4px;
+    /* border-radius: 4px; */
     color: #555555;
-    padding: 6px;
+    /* padding: 6px; */
     width: 60px;
     height: 25px;
     /* display: inline; */
