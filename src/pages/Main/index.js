@@ -1,6 +1,6 @@
 import React, { useState, useMemo, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { FaDice, FaSpinner } from 'react-icons/fa';
+import { FaDice } from 'react-icons/fa';
 
 import Container from '../../components/Container';
 import GameContainer from '../../components/GameContainer';
@@ -8,7 +8,7 @@ import GameContainer from '../../components/GameContainer';
 import { Contagem, Topo, Divinputs } from './styles';
 
 export default function Cassino() {
-  const [artCoins, setArtCoins] = useState(1000);
+  // const [artCoins, setArtCoins] = useState(1000);
   const [winOrLose, setWinOrLose] = useState('');
   const [game, setGame] = useState('');
 
@@ -20,67 +20,46 @@ export default function Cassino() {
 
   const [chosenDice, setChosenDice] = useState(0);
 
-  const [loading, setLoading] = useState(false);
-
   // UseMemos
   const diceResult = useMemo(() => dice, [dice]);
 
   const dispatch = useDispatch();
+  const headerCoins = useSelector(state => state.headerCoins);
 
-  function addHeaderCoins(num) {
-    return { type: 'ADD_COINS', num };
+  function addHeaderCoins(gameResult) {
+    if (gameResult === 'justadd') return { type: 'ADD_COINS', num: 1000 };
+    if (gameResult === 'winhilo')
+      return { type: 'ADD_COINS', num: betValue * 0.9 };
+    if (gameResult === 'winguess')
+      return { type: 'ADD_COINS', num: betValue * 5 };
+    if (gameResult === 'lose') return { type: 'ADD_COINS', num: -1 * betValue };
   }
 
-  function addCoin() {
-    setArtCoins(prevArtCoins => prevArtCoins + 1000);
-    dispatch(addHeaderCoins(1123));
+  function addCoin(gameResult) {
+    dispatch(addHeaderCoins(gameResult));
   }
 
   function win() {
     setWinOrLose('Ganhou');
-
-    if (game === 'hilo') {
-      setArtCoins(prevArtCoins => prevArtCoins + betValue * 0.9);
-    }
-    if (game === 'guess') {
-      setArtCoins(prevArtCoins => prevArtCoins + betValue * 5);
-    }
+    game === 'hilo' ? addCoin('winhilo') : addCoin('winguess');
   }
 
   function lose() {
     setWinOrLose('Perdeu');
-    setArtCoins(prevArtCoins => prevArtCoins - betValue);
+    addCoin('lose');
   }
 
   function playHiLo() {
     if (chosenDice === 'high') {
-      dice > 3
-        ? win()
-        : // setWinOrLose('Ganhou')
-        // setArtCoins(prevArtCoins => prevArtCoins + betValue * 0.9)
-        lose();
-      // setWinOrLose('Perdeu');
-      // setArtCoins(prevArtCoins => prevArtCoins - betValue);
+      dice > 3 ? win() : lose();
     } else {
-      dice < 4
-        ? win()
-        : // setWinOrLose('Ganhou')
-        // setArtCoins(prevArtCoins => prevArtCoins + betValue * 0.9)
-        lose();
-      // setWinOrLose('Perdeu');
-      // setArtCoins(prevArtCoins => prevArtCoins - betValue);
+      dice < 4 ? win() : lose();
     }
   }
 
   function playGuess() {
     if (dice !== 0) {
-      dice === chosenDice
-        ? win()
-        : // setWinOrLose('Ganhou');
-        // setArtCoins(prevArtCoins => prevArtCoins + betValue * 5);
-        lose();
-      // setWinOrLose('Perdeu');
-      // setArtCoins(prevArtCoins => prevArtCoins - betValue);
+      dice === chosenDice ? win() : lose();
     }
   }
 
@@ -92,38 +71,6 @@ export default function Cassino() {
     if (game === 'guess') {
       playGuess(dice, chosenDice);
     }
-
-    // if (dice > 3 && chosenDice === 'high' && game === 'hilo') {
-    //   setWinOrLose('Ganhou');
-    //   setArtCoins(prevArtCoins => prevArtCoins + betValue * 0.9);
-    // }
-
-    // if (dice < 4 && chosenDice === 'high' && game === 'hilo') {
-    //   setWinOrLose('Perdeu');
-    //   setArtCoins(prevArtCoins => prevArtCoins - betValue);
-    // }
-
-    // if (dice > 3 && chosenDice === 'low' && game === 'hilo') {
-    //   setWinOrLose('Perdeu');
-    //   setArtCoins(prevArtCoins => prevArtCoins - betValue);
-    // }
-
-    // if (dice < 4 && chosenDice === 'low' && game === 'hilo') {
-    //   setWinOrLose('Ganhou');
-    //   setArtCoins(prevArtCoins => prevArtCoins + betValue * 0.9);
-    // }
-    // guess checks
-    // if (dice !== 0) {
-    //   if (dice === chosenDice && game === 'guess') {
-    //     setWinOrLose('Ganhou');
-    //     setArtCoins(prevArtCoins => prevArtCoins + betValue * 5);
-    //   }
-
-    //   if (dice !== chosenDice && game === 'guess') {
-    //     setWinOrLose('Perdeu');
-    //     setArtCoins(prevArtCoins => prevArtCoins - betValue);
-    //   }
-    // }
   }, [dice]);
 
   // / ROLL DICE
@@ -139,7 +86,7 @@ export default function Cassino() {
       return;
     }
 
-    if (betValue > artCoins) {
+    if (betValue > headerCoins) {
       setWinOrLose('');
       setHasError("You can't bet more than you have");
       return;
@@ -160,12 +107,11 @@ export default function Cassino() {
     <>
       <Topo>
         <Contagem>
-          No momento você possui: {artCoins.toFixed(2)} ArtCoins
+          No momento você possui: {headerCoins.toFixed(2)} ArtCoins
         </Contagem>
-        <button type="submit" onClick={addCoin}>
+        <button type="submit" onClick={() => addCoin('justadd')}>
           <span>Adicionar ArtCoins</span>
         </button>
-        {loading ? <FaSpinner /> : ''}
       </Topo>
       <Container>
         <h1>
@@ -256,28 +202,3 @@ export default function Cassino() {
     </>
   );
 }
-
-// switch (hol) {
-//   case 'high' && dice > 3:
-//     console.log('fooooi');
-//   // if (dice > 3) return console.log('high high');
-//   // break;
-
-//   case 'high':
-//     setHol('high');
-//     if (dice <= 3) return console.log('high low');
-//   // break;
-
-//   case 'low':
-//     setHol('low');
-//     if (dice > 3) return console.log('low high');
-//   // break;
-
-//   case 'low':
-//     setHol('low');
-//     if (dice <= 3) return console.log('low low');
-//   // break;
-
-//   default:
-//     return console.log('default');
-// }
