@@ -1,7 +1,7 @@
-import styled, { keyframes, css } from 'styled-components';
+import styled from 'styled-components';
 import { darken } from 'polished';
 
-const GameContainer = styled.div`
+export const GameContainer = styled.div`
   max-width: 700px;
   background: #fff;
   /* border-radius: 4px; */
@@ -11,11 +11,24 @@ const GameContainer = styled.div`
   text-align: center;
 
   div {
+    display: grid;
+    grid-template-columns: 25% 25% 25% 25%;
     /* flex-direction: row; */
     text-align: center;
-    padding: 3vw;
-    position: relative;
-    /* display: grid; */
+    /* padding: 3vw; */
+    /* position: relative; */
+    /* background: green; */
+    @media (max-width: 500px) {
+      grid-template-columns: 50% 50%;
+      max-width: 250px;
+      margin: auto;
+      /* background: green; */
+    }
+
+    div {
+      /* margin-right: 30px; */
+      display: block;
+    }
   }
 
   h1 {
@@ -66,7 +79,66 @@ const GameContainer = styled.div`
     /* float: right; */
   }
 
+
+  div.button-controls-hilo {
+    display: grid;
+    grid-template-columns: 50% 50%;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    /* background: ${props => (props.jogoHl ? '#ff7804' : 'grey')}; */
+    max-width: 120px;
+    margin: auto auto;
+    /* background: black; */
+
+    @media (max-width: 400px) {
+      grid-template-columns: 50% 50%;
+      max-width: 180px;
+      margin: auto;
+      /* background: green; */
+    }
+
+    button {
+      align-items: center;
+      justify-content: center;
+      margin: auto;
+
+      @media (max-width: 400px) {
+        margin-bottom: 10px;
+      }
+    }
+  }
+
+  div.button-controls {
+    display: grid;
+    grid-template-columns: 16.6% 16.6% 16.6% 16.6% 16.6% 16.6%;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    /* background: ${props => (props.jogoHl ? '#ff7804' : 'grey')}; */
+    max-width: 350px;
+    margin: auto auto;
+
+    @media (max-width: 400px) {
+      grid-template-columns: 33.3% 33.3% 33.3%;
+      max-width: 180px;
+      margin: auto;
+      /* background: green; */
+    }
+
+    button {
+      align-items: center;
+      justify-content: center;
+      margin: auto;
+
+      @media (max-width: 400px) {
+        margin-bottom: 10px;
+      }
+    }
+  }
+
   button {
+    /* margin: auto; */
     color: #222;
     font-size: 14px;
     font-family: Arial, Helvetica, sans-serif;
@@ -79,10 +151,10 @@ const GameContainer = styled.div`
     border-radius: 4px;
     overflow: hidden;
     margin-top: 5px;
-    margin-right: 5px;
+    /* margin-right: 5px; */
 
-    justify-content: center;
-    align-items: center;
+    /* justify-content: center;
+    align-items: center; */
     transition: background 0.2s;
     /* padding: 6px; */
 

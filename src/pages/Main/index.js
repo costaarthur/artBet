@@ -146,7 +146,9 @@ export default function Cassino() {
             <h4>Profit on win</h4>
             <input value={betValue * 0.9} disabled />
           </Divinputs>
-          <br />
+        </div>
+        <br />
+        <div className="button-controls-hilo" jogoHl>
           <button type="button" onClick={() => diceGames('high')}>
             <span>HIGH</span>
           </button>
@@ -162,41 +164,48 @@ export default function Cassino() {
         <h1>Guess a number</h1>
         {game === 'guess' ? <h3>Valor girado: {diceResult} </h3> : <h3> </h3>}
         <br />
-        <Divinputs>
-          <h4>Valor da aposta</h4>
-          <input value={betValue} onChange={e => setBetValue(e.target.value)} />
-        </Divinputs>
-        <Divinputs>
-          <h4>Win chance</h4>
-          <input value="16.67%" disabled />
-        </Divinputs>
-        <Divinputs>
-          <h4>Payout</h4>
-          <input value="500%" disabled />
-        </Divinputs>
-        <Divinputs>
-          <h4>Profit on win</h4>
-          <input value={betValue * 4} disabled />
-        </Divinputs>
+        <div className="game-controls">
+          <Divinputs>
+            <h4>Valor da aposta</h4>
+            <input
+              value={betValue}
+              onChange={e => setBetValue(e.target.value)}
+            />
+          </Divinputs>
+          <Divinputs>
+            <h4>Win chance</h4>
+            <input value="16.67%" disabled />
+          </Divinputs>
+          <Divinputs>
+            <h4>Payout</h4>
+            <input value="500%" disabled />
+          </Divinputs>
+          <Divinputs>
+            <h4>Profit on win</h4>
+            <input value={betValue * 4} disabled />
+          </Divinputs>
+        </div>
         <br />
-        <button type="submit" onClick={() => diceGames(1)}>
-          <span>1</span>
-        </button>
-        <button type="submit" onClick={() => diceGames(2)}>
-          <span>2</span>
-        </button>
-        <button type="submit" onClick={() => diceGames(3)}>
-          <span>3</span>
-        </button>
-        <button type="submit" onClick={() => diceGames(4)}>
-          <span>4</span>
-        </button>
-        <button type="submit" onClick={() => diceGames(5)}>
-          <span>5</span>
-        </button>
-        <button type="submit" onClick={() => diceGames(6)}>
-          <span>6</span>
-        </button>
+        <div className="button-controls">
+          <button type="submit" onClick={() => diceGames(1)}>
+            <span>1</span>
+          </button>
+          <button type="submit" onClick={() => diceGames(2)}>
+            <span>2</span>
+          </button>
+          <button type="submit" onClick={() => diceGames(3)}>
+            <span>3</span>
+          </button>
+          <button type="submit" onClick={() => diceGames(4)}>
+            <span>4</span>
+          </button>
+          <button type="submit" onClick={() => diceGames(5)}>
+            <span>5</span>
+          </button>
+          <button type="submit" onClick={() => diceGames(6)}>
+            <span>6</span>
+          </button>
+        </div>
         {setWinOrLose && game === 'guess' ? <h6>Você {winOrLose}!</h6> : ''}
       </GameContainer>
     </>
